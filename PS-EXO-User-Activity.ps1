@@ -28,9 +28,13 @@ catch {
 
 #Region Main
 #List UPNs from Get-mailbox and using them to identify each user's timestamps in Get-MailboxStatistics. This function doesn't appear to work with bulk users otherwise.
-Connect-ExchangeOnline -ShowBanner:$false 
-$Output = Get-Mailbox | Select-Object userprincipalname | ForEach-Object{ 
-    Get-MailboxStatistics -Identity $_.userprincipalname | Select-Object @{n='User';e={$_.DisplayName}}, @{n='Last Logon Time';e={$_.LastLogonTime}}, @{n='Last Interaction Time';e={$_.LastInteractionTime}}
+Connect-ExchangeOnline -ShowBanner:$false
+$i=0
+$UPN = Get-Mailbox | Select-Object userprincipalname
+$Output = $UPN | ForEach-Object{
+    Write-Progress -Activity "Retrieving TimeStamps" -CurrentOperation $_.userprincipalname -Status "$(([Math]::Round((($i)/$UPN.count * 100),0)))% Complete" -PercentComplete ($i / $UPN.count*100)
+    Get-MailboxStatistics  -Identity $_.userprincipalname | Select-Object @{n='User';e={$_.DisplayName}}, @{n='Last Logon Time';e={$_.LastLogonTime}}, @{n='Last Interaction Time';e={$_.LastInteractionTime}}
+    $i++
 }
 $Output | Export-Csv -path $env:USERPROFILE\Desktop\Report.csv -NoTypeInformation
 #EndRegion Main
