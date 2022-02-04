@@ -3,17 +3,17 @@
 	This script collects data on Exchange Online mailboxes and returns the last known time stamp of user activity and logon. 
 .DESCRIPTION
 	This script depends on ExchangeOnline and will attempt to install the module if it is not found.
-    All mailboxes in the tenant are assumed.   
+    	All mailboxes in the tenant are assumed.   
 	Checks the last logon time and last interaction time of each mailbox.
-    Exports report to environment's desktop as a .csv
+    	Exports report to environment's desktop as a .csv
 .EXAMPLE
 	.\PS-EXCHONLINE-User-Activity
 .NOTES
-    Author:             Luke Von Hagel (lvonhagel@brashbit.io)
+    	Author:             	Luke Von Hagel (lvonhagel@brashbit.io)
 
-	License: 			This script is distributed under "THE BEER-WARE LICENSE" (Revision 42):
-						As long as you retain this notice you can do whatever you want with this stuff.
-						If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
+	License: 		This script is distributed under "THE BEER-WARE LICENSE" (Revision 42):
+				As long as you retain this notice you can do whatever you want with this stuff.
+				If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
 #>
 #Region InstallEXO
 try {
